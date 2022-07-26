@@ -5,7 +5,7 @@ export HTTPS_PROXY="https://{$RUNNER_NAME}.herokuapp.com"
 
 echo $HTTPS_PROXY
 
-sudo gitlab-runner register \
+gitlab-runner register \
   --non-interactive \
   --url "https://gitlab.com/" \
   --registration-token "$GITLAB_TOKEN" \
