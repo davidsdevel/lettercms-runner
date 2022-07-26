@@ -1,5 +1,7 @@
 #!/bin/bash
 
+apt install docker
+
 docker volume create gitlab-runner-config
 
 docker run -d --name gitlab-runner --restart always \
