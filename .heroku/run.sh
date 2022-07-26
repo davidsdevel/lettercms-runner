@@ -5,7 +5,7 @@ export HTTPS_PROXY="https://lettercms-runner.herokuapp.com"
 
 echo $HTTPS_PROXY
 
-sudo gitlab-runner register \
+fakesu -c gitlab-runner register \
   --non-interactive \
   --url "https://gitlab.com/" \
   --registration-token "$GITLAB_TOKEN" \
