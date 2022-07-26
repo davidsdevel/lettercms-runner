@@ -1,3 +1,1 @@
-:repo:deb [trusted=yes arch=amd64] https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ xenial main
-
-gitlab-runner
+docker

@@ -1,11 +1,14 @@
 #!/bin/bash
 
-export HTTP_PROXY="http://lettercms-runner.herokuapp.com"
-export HTTPS_PROXY="https://lettercms-runner.herokuapp.com"
+docker volume create gitlab-runner-config
 
-echo $HTTPS_PROXY
+docker run -d --name gitlab-runner --restart always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v gitlab-runner-config:/etc/gitlab-runner \
+    p $PORT:8093 \
+    gitlab/gitlab-runner:latest
 
-fakesu -c gitlab-runner register \
+docker run --rm -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:latest register \
   --non-interactive \
   --url "https://gitlab.com/" \
   --registration-token "$GITLAB_TOKEN" \
