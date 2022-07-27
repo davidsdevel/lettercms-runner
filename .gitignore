@@ -1,3 +1,2 @@
-!heroku.yml
-!Dockerfile
+!.heroku
 !README.md
