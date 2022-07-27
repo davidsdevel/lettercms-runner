@@ -3,15 +3,15 @@
 echo "$USER"
 whoami
 
-mkdir $BUILD_DIR/bin
+mkdir $BUILD_DIR/runner-bin
 mkdir $BUILD_DIR/gitlab-runner
 
 echo "Fetching binaries"
-curl -L --output $BUILD_DIR/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
+curl -L --output $BUILD_DIR/runner-bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
 
-chmod +x $BUILD_DIR/bin/gitlab-runner
+chmod +x $BUILD_DIR/runner-bin/gitlab-runner
 
-export  PATH=$BUILD_DIR/bin
+export  PATH=$BUILD_DIR/runner-bin
 
-gitlab-runner install --working-directory=$BUILD_DIR/gitlab-runner
-gitlab-runner start
+sudo gitlab-runner install --user=$USER --working-directory=$BUILD_DIR/gitlab-runner
+sudo gitlab-runner start
