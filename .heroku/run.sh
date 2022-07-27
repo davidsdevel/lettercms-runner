@@ -15,8 +15,5 @@ chmod +x $BUILD_DIR/bin/gitlab-runner
 
 export  PATH=$BUILD_DIR/bin
 
-useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
-
-
-su-exec non-root gitlab-runner install --user=gitlab-runner --working-directory=$BUILD_DIR/gitlab-runner
+su-exec non-root gitlab-runner install --working-directory=$BUILD_DIR/gitlab-runner
 su-exec non-root gitlab-runner start
