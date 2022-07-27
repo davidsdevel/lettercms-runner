@@ -1,9 +1,10 @@
 #!/bin/bash
 
 apt-get update
-apt-get install -y su-exec
-echo whoami
+apt-get install -y setpriv
 echo "$USER"
+
+whoami
 
 mkdir $BUILD_DIR/bin
 mkdir $BUILD_DIR/gitlab-runner
@@ -15,5 +16,5 @@ chmod +x $BUILD_DIR/bin/gitlab-runner
 
 export  PATH=$BUILD_DIR/bin
 
-su-exec non-root gitlab-runner install --working-directory=$BUILD_DIR/gitlab-runner
-su-exec non-root gitlab-runner start
+chroot --userspec=$USER / gitlab-runner install --working-directory=$BUILD_DIR/gitlab-runner
+chroot --userspec=$USER / gitlab-runner start
