@@ -29,11 +29,13 @@ tar xzvf docker.tgz
 tar xzvf rootless.tgz
 
 cd docker
-
 chmod +x docker
+
+cd ../docker-rootless-extras
 chmod +x dockerd-rootless.sh
 
 export PATH=$PATH:/app/bin/docker
+export PATH=$PATH:/app/bin/docker-rootless-extras
 
 cd /app
 
