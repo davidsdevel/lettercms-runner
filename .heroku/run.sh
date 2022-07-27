@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get install -y util-linux chroot
+apt-get install -y util-linux
 echo "$USER"
 
 whoami
@@ -16,5 +16,5 @@ chmod +x $BUILD_DIR/bin/gitlab-runner
 
 export  PATH=$BUILD_DIR/bin
 
-chroot --userspec=$USER / gitlab-runner install --user=$USER --working-directory=$BUILD_DIR/gitlab-runner
-chroot --userspec=$USER / gitlab-runner start
+setpriv --reuid=nobody --regid=nogroup --init-groups gitlab-runner install --user=$USER --working-directory=$BUILD_DIR/gitlab-runner
+setpriv --reuid=nobody --regid=nogroup --init-groups gitlab-runner start
