@@ -13,18 +13,19 @@ echo "-----> CACHE_DIR   => $CACHE_DIR"
 echo "-----> VENDOR_DIR  => $VENDOR_DIR"
 echo "-----> PLUGINS_DIR => $PLUGINS_DIR"
 
-mkdir -p $CACHE_DIR $VENDOR_DIR
+mkdir -p /app/bin
 
 # DOCKER_VERSION=20.10.8
 # COMPOSE_VERSION=v2.0.1
 
-echo "-----> Downloading docker CLI $DOCKER_VERSION from $DOCKER_URL"
-curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o $HOME/docker.tgz
+echo "-----> Downloading docker CLI"
+curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o /app/docker.tgz
 
 echo "-----> Installing docker under /app/vendor"
-tar -zxf $HOME/docker.tgz -C $HOME/bin/docker
-chmod +x $HOME/bin/docker
+tar -zxf /app/docker.tgz -C /app/bin
+chmod +x /app/bin/docker
 
-export PATH=$PATH:$HOME/bin
+export PATH=$PATH:/app/bin
 
+/app/bin/docker run hello-world
 docker run hello-world
