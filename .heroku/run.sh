@@ -13,5 +13,5 @@ chmod +x $BUILD_DIR/bin/gitlab-runner
 
 export  PATH=$BUILD_DIR/bin
 
-gitlab-runner install --user=$USER --working-directory=$BUILD_DIR/gitlab-runner
+gitlab-runner install --working-directory=$BUILD_DIR/gitlab-runner
 gitlab-runner start
