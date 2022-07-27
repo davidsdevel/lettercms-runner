@@ -21,19 +21,19 @@ mkdir -p /app/bin
 echo "-----> Downloading docker CLI"
 curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o /app/bin/docker.tgz
 
-echo "-----> Installing docker under /app/vendor"
+apt-get install -y docker-ce-rootless-extras
 
+echo "-----> Installing docker under /app/vendor"
 cd /app/bin
 
 tar xzvf docker.tgz
 
 cd docker
 chmod +x docker
-chmod +x dockerd
 
 export PATH=$PATH:/app/bin/docker
 
 cd /app
 
-dockerd
+dockerd-rootless.sh
 docker run hello-world
