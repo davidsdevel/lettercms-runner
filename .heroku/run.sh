@@ -21,6 +21,7 @@ mkdir -p /app/bin
 echo "-----> Downloading docker CLI"
 curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o /app/bin/docker.tgz
 
+echo "install rootless"
 apt-get install -y docker-ce-rootless-extras
 
 echo "-----> Installing docker under /app/vendor"
