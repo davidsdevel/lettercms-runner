@@ -1,7 +1,9 @@
 #!/bin/bash
 
 apt-get update
-apt-get install -y useradd
+apt-get install -y su-exec
+echo whoami
+echo "$USER"
 
 mkdir $BUILD_DIR/bin
 mkdir $BUILD_DIR/gitlab-runner
@@ -16,5 +18,5 @@ export  PATH=$BUILD_DIR/bin
 useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
 
 
-gitlab-runner install --user=gitlab-runner --working-directory=$BUILD_DIR/gitlab-runner
-gitlab-runner start
+su-exec non-root gitlab-runner install --user=gitlab-runner --working-directory=$BUILD_DIR/gitlab-runner
+su-exec non-root gitlab-runner start
