@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update
-apt-get install -y util-linux
+apt-get install -y util-linux chroot
 echo "$USER"
 
 whoami
