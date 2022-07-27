@@ -35,5 +35,5 @@ export PATH=$PATH:/app/bin/docker
 
 cd /app
 
-dockerd &
+dockerd
 docker run hello-world
