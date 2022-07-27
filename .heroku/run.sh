@@ -20,23 +20,22 @@ mkdir -p /app/bin
 
 echo "-----> Downloading docker CLI"
 curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o /app/bin/docker.tgz
+curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-rootless-extras-20.10.9.tgz" -o /app/bin/rootless.tgz
 
 echo "-----> Installing docker under /app/vendor"
 cd /app/bin
 
 tar xzvf docker.tgz
+tar xzvf rootless.tgz
 
 cd docker
-groupadd docker
-usermod -aG docker $USER
-newgrp docker
 
 chmod +x docker
-chmod +x dockerd
+chmod +x dockerd-rootless.sh
 
 export PATH=$PATH:/app/bin/docker
 
 cd /app
 
-dockerd
+dockerd-rootless.sh
 docker run hello-world
