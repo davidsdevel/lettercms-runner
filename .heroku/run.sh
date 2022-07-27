@@ -1,13 +1,13 @@
 #!/bin/bash
 
-$VENDOR_DIR/docker/docker volume create gitlab-runner-config
+docker volume create gitlab-runner-config
 
-$VENDOR_DIR/docker/docker run -d --name gitlab-runner --restart always \
+docker run -d --name gitlab-runner --restart always \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v gitlab-runner-config:/etc/gitlab-runner \
     gitlab/gitlab-runner:alpine
 
-$VENDOR_DIR/docker/docker run --rm -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:alpine register \
+docker run --rm -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:alpine register \
   --non-interactive \
   --url "https://gitlab.com/" \
   --registration-token "$GITLAB_TOKEN" \
