@@ -19,13 +19,19 @@ mkdir -p /app/bin
 # COMPOSE_VERSION=v2.0.1
 
 echo "-----> Downloading docker CLI"
-curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o /app/docker.tgz
+curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o /app/bin/docker.tgz
 
 echo "-----> Installing docker under /app/vendor"
-tar -zxf /app/docker.tgz -C /app/bin
+
+cd /app/bin
+
+tar xzvf docker.tgz
+
+cd ..
+
 chmod +x /app/bin/docker
 
 export PATH=$PATH:/app/bin
 
-/app/bin/docker run hello-world
+./bin/docker run hello-world
 docker run hello-world
