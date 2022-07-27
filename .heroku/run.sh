@@ -6,7 +6,7 @@ whoami
 mkdir $BUILD_DIR/runner-bin
 mkdir $BUILD_DIR/gitlab-runner
 
-echo "Fetching binaries"
+echo "Fetching runner"
 curl -L --output $BUILD_DIR/runner-bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
 
 chmod +x $BUILD_DIR/runner-bin/gitlab-runner
