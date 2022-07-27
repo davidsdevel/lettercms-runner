@@ -3,29 +3,28 @@
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
+VENDOR_DIR=$BUILD_DIR/vendor
+PLUGINS_DIR=$BUILD_DIR/.docker/cli-plugins
 
 echo
 echo "-----> HOME        => $HOME"
 echo "-----> BUILD_DIR   => $BUILD_DIR"
 echo "-----> CACHE_DIR   => $CACHE_DIR"
+echo "-----> VENDOR_DIR  => $VENDOR_DIR"
+echo "-----> PLUGINS_DIR => $PLUGINS_DIR"
 
-echo "Uninstalling packages"
-apt-get remove docker docker-engine docker.io containerd runc
+mkdir -p $CACHE_DIR $VENDOR_DIR
 
-echo "Downloading packages"
-curl -s "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.6.6-1_amd64.deb" -o $BUILD_DIR/containerd.deb
-curl -s "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.9~3-0~ubuntu-focal_amd64.deb" -o $BUILD_DIR/ce-cli.deb
-curl -s "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-rootless-extras_20.10.9~3-0~ubuntu-focal_amd64.deb" -o $BUILD_DIR/ce-rootless.deb
-curl -s "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.9~3-0~ubuntu-focal_amd64.deb" -o $BUILD_DIR/ce.deb
-curl -s "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-compose-plugin_2.6.0~ubuntu-focal_amd64.deb" -o $BUILD_DIR/compose.deb
-curl -s "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-scan-plugin_0.9.0~ubuntu-focal_amd64.deb" -o $BUILD_DIR/scan.deb
+# DOCKER_VERSION=20.10.8
+# COMPOSE_VERSION=v2.0.1
 
-echo "Installing packages"
-dpkg -i $BUILD_DIR/containerd.deb
-dpkg -i $BUILD_DIR/ce-cli.deb
-dpkg -i $BUILD_DIR/ce-rootless.deb
-dpkg -i $BUILD_DIR/ce.deb
-dpkg -i $BUILD_DIR/compose.deb
-dpkg -i $BUILD_DIR/scan.deb
+echo "-----> Downloading docker CLI $DOCKER_VERSION from $DOCKER_URL"
+curl -s "https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz" -o $HOME/docker.tgz
+
+echo "-----> Installing docker under /app/vendor"
+tar -zxf $HOME/docker.tgz -C $HOME/bin/docker
+chmod +x $HOME/bin/docker
+
+export PATH=$PATH:$HOME/bin
 
 docker run hello-world
