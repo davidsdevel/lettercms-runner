@@ -1,21 +1,15 @@
 #!/bin/bash
 
-docker volume create gitlab-runner-config
+mkdir $BUILD_DIR/bin
 
-docker run -d --name gitlab-runner --restart always \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v gitlab-runner-config:/etc/gitlab-runner \
-    gitlab/gitlab-runner:alpine
+echo "Fetching binaries"
+curl -L --output $BUILD_DIR/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64"
 
-docker run --rm -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:alpine register \
-  --non-interactive \
-  --url "https://gitlab.com/" \
-  --registration-token "$GITLAB_TOKEN" \
-  --executor "docker" \
-  --docker-image alpine:latest \
-  --description "lettercms-runner" \
-  --maintenance-note "Free-form maintainer notes about this runner" \
-  --tag-list "docker,aws" \
-  --run-untagged="true" \
-  --locked="false" \
-  --access-level="not_protected"
+chmod +x $BUILD_DIR/bin/gitlab-runner
+
+export  PATH=$BUILD_DIR/bin
+
+useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+
+gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+gitlab-runner start
