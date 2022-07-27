@@ -29,9 +29,11 @@ tar xzvf docker.tgz
 
 cd docker
 chmod +x docker
-
-./docker run hello-world
+chmod +x dockerd
 
 export PATH=$PATH:/app/bin/docker
 
+cd /app
+
+dockerd &
 docker run hello-world
