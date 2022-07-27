@@ -1,19 +1,8 @@
-#!/bin/bash
-
-export HTTP_PROXY="http://{$RUNNER_NAME}.herokuapp.com"
-export HTTPS_PROXY="https://{$RUNNER_NAME}.herokuapp.com"
-
-echo $HTTPS_PROXY
-
-gitlab-runner register \
-  --non-interactive \
-  --url "https://gitlab.com/" \
-  --registration-token "$GITLAB_TOKEN" \
-  --executor "docker" \
-  --docker-image alpine:latest \
-  --description "$RUNNER_NAME" \
-  --maintenance-note "Free-form maintainer notes about this runner" \
-  --tag-list "docker,aws" \
-  --run-untagged="true" \
-  --locked="false" \
-  --access-level="not_protected"
+cat > /etc/systemd/system/gitlab-runner.service.d/override.conf <<EOF
+[Service]
+User=gitlab-runner
+Group=gitlab-runner
+ExecStartPre=+ln -sf /var/run/podman/podman.sock /var/run/docker.sock
+ExecStart=
+ExecStart=strace -e getuid,getgid -e inject=getuid:retval=0 -e inject=getgid:retval=0 -- /usr/bin/gitlab-runner run --working-directory /home/gitlab-runner --config /etc/gitlab-runner/config.toml --service gitlab-runner --user gitlab-runner
+EOF
