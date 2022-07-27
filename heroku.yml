@@ -1,1 +1,5 @@
-heroku.yml
+build:
+  docker:
+    web: Dockerfile
+  config:
+    GITLAB_TOKEN: $GITLAB_TOKEN
