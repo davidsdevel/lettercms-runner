@@ -19,3 +19,5 @@ docker run --rm -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:
   --run-untagged="true" \
   --locked="false" \
   --access-level="not_protected"
+
+echo "Done"
